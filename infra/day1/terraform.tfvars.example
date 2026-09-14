@@ -1,0 +1,3 @@
+# Copy to terraform.tfvars (ignored) only after the non-root cms-dev profile is ready.
+aws_region  = "ca-central-1"
+aws_profile = "cms-deploy"

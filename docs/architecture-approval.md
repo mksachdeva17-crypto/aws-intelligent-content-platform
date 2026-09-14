@@ -1,13 +1,14 @@
 ---
 title: AWS Intelligent Content Platform — MVP 1 architecture baseline
-status: proposed-aligned-to-shared-diagram
+status: approved-by-owner
 updated: 2026-09-14
+approved: 2026-09-14
 source: https://chatgpt.com/share/6aa82bd1-34ec-83e9-8c8c-8ec50eaebad3
 ---
 
 # Architecture baseline
 
-This is a text reconstruction of the [latest shared architecture discussion and generated diagram](https://chatgpt.com/share/6aa82bd1-34ec-83e9-8c8c-8ec50eaebad3), refined into an implementation contract. It supersedes the prior Article-first, service-bingo approval packet. The generated image names the same management, event and delivery layers. This document does **not** claim owner approval or AWS deployment.
+This is a text reconstruction of the [latest shared architecture discussion and generated diagram](https://chatgpt.com/share/6aa82bd1-34ec-83e9-8c8c-8ec50eaebad3), refined into an implementation contract. It supersedes the prior Article-first, service-bingo approval packet. The generated image names the same management, event and delivery layers. The project owner approved this architecture on 2026-09-14; approval does **not** imply AWS deployment.
 
 ![Original AWS Intelligent Content Platform architecture diagram](assets/aws-intelligent-content-platform-architecture.png)
 
@@ -73,4 +74,4 @@ The implementation deliberately exercises API Gateway, Lambda, DynamoDB, S3, Clo
 - Whether to use the CloudFront default domain or an owned domain; no DNS change is assumed.
 - Generic locale code policy and first demo industry configuration.
 
-These inputs gate corresponding deployments, not the validity of the generic architecture. This baseline is **proposed** until the owner confirms it; the latest shared conversation supplies direction but is not a sign-off in this repository.
+These inputs gate corresponding deployments, not the validity of the approved generic architecture.

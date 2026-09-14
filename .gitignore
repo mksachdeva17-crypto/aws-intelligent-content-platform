@@ -12,6 +12,10 @@ dist/
 *.tfstate
 *.tfstate.*
 *.tfplan
+terraform.tfvars
+*.auto.tfvars
+*.tfvars.json
+infra/day1/content-api.zip
 
 # Local tooling caches
 .tools/

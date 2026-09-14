@@ -1,0 +1,13 @@
+# Day 1 evidence — 2026-09-14
+
+- Architecture: approved by the project owner; see the [architecture baseline](../architecture-approval.md).
+- Implementation: generic create/get/update, tenant/site-scoped reads, immutable version snapshots, and conditional stale-write rejection. No product- or article-specific core branch exists.
+- Local verification: `py -m unittest discover -s tests -v` passed all 6 tests on Python 3.11. Terraform v1.16.2 `fmt -check` and `validate` passed.
+- AWS identity: `cms-dev` uses AWS CLI browser-issued temporary credentials for IAM user `Hakim`; `cms-deploy` assumes the scoped `IntelligentCmsDay1DeployRole`. The `hakim` profile resolves to account-root and was used only for the one-time scoped IAM bootstrap, not deployment. The owner explicitly deferred MFA for this learning environment.
+- Deployment: Terraform created 12 resources in `ca-central-1`: one IAM-protected HTTP API with three routes, one Python 3.12 Lambda and execution role/policy, one on-demand DynamoDB table, one CloudWatch log group, and the required integrations/permissions. A final live plan reported no changes.
+- Endpoint: `https://fokte33w34.execute-api.ca-central-1.amazonaws.com/`. `POST /content`, `GET /content/{id}`, and `PUT /content/{id}` use `AWS_IAM` authorization. An unsigned POST returned HTTP 403.
+- AWS smoke: PASS. The same generic path created/read `product` ID `8c6ed45d-9358-4619-9211-22444ed6d4eb` and `article` ID `e8dc4171-7367-4db6-9337-f379cbde656c`; the product reached version 2, and reusing expected version 1 returned HTTP 409.
+- Cost: the owner selected a monthly target below USD $10. Day 1 uses usage-priced API Gateway, Lambda, DynamoDB on-demand, and CloudWatch Logs. A pre-deployment Cost Explorer read reported approximately zero September spend but may lag; the target is not an automatic billing cap.
+- LocalStack: explicitly skipped by the owner for Day 1. Optional future Hobby-tier DynamoDB configuration remains checked in; no LocalStack container or local resource was created.
+- State/teardown: Terraform state is local and ignored. Only its current holder should change this stack until a shared encrypted backend is added. Use `./scripts/terraform_day1.ps1 destroy` with the same profile, Region, and CA arguments, then review before confirming.
+- Interview answer: at 1M requests, separate authenticated editor traffic from public reads. API Gateway and Lambda scale authoring behind throttles/concurrency controls; future published reads are offloaded to CloudFront/S3. DynamoDB access is keyed by tenant/site/entry, with hot-key, capacity, latency, and cost monitoring. The Day 1 stack intentionally excludes public delivery and load testing.

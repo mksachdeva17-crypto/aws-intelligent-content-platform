@@ -1,6 +1,6 @@
 ---
 title: AWS Intelligent Content Platform — MVP 1 ten-day implementation plan
-status: aligned-to-shared-conversation-not-yet-started
+status: day-1-complete-day-2-pending
 updated: 2026-09-14
 source: https://chatgpt.com/share/6aa82bd1-34ec-83e9-8c8c-8ec50eaebad3
 ---
@@ -8,6 +8,8 @@ source: https://chatgpt.com/share/6aa82bd1-34ec-83e9-8c8c-8ec50eaebad3
 # MVP 1: ten days, three hours per day
 
 This plan follows the [latest shared product discussion](https://chatgpt.com/share/6aa82bd1-34ec-83e9-8c8c-8ec50eaebad3), especially its generated architecture diagram and final Day 1–10 schedule. It **replaces** the earlier approval-only Day 1 and the service-bingo implementation plan. The two goals are a credible multi-industry CMS foundation and hands-on SAA-C03 architecture practice. Each day has a hard **3-hour maximum**: 45 minutes architecture, 90 minutes implementation, 45 minutes code walkthrough/interview reasoning. Do not convert the last block into extra coding.
+
+The project owner approved the [architecture baseline](../../docs/architecture-approval.md) on 2026-09-14. Day 1 coding, AWS deployment, signed smoke test, and evidence are complete. Two contributors can split API/domain/tests and Terraform/deployment work as detailed in the [Day 1 plan](../../docs/day-01-plan.md).
 
 ## Product contract
 
@@ -44,4 +46,4 @@ Designed/stubbed: richer localization, AI, multi-region DR, extension SDK and ad
 
 ## Prerequisites and truthfulness
 
-The shared plan expects a Day 1 AWS deployment. That requires an AWS account/profile, selected region, spending ceiling and appropriate permissions. None is inferred from the shared conversation. Until available, local code and Terraform validation can progress, but an AWS-dependent DoD remains pending. Expensive resources such as OpenSearch require a cost check before provisioning. The architecture diagram is a target, not evidence that any component is deployed.
+Day 1 was deployed through a project-scoped role in `ca-central-1` under the owner's below-USD-$10 monthly target. The target is not a billing hard cap. Later expensive resources such as OpenSearch still require a fresh cost check before provisioning. The architecture diagram remains a target; only resources listed in each daily evidence record should be treated as deployed.
