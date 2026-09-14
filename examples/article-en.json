@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "contentId": "11111111-1111-4111-8111-111111111111",
+  "contentType": "article",
+  "locale": "en",
+  "draftRevisionId": "11111111-1111-4111-8111-111111111113",
+  "published": {
+    "publishId": "11111111-1111-4111-8111-111111111114",
+    "revisionId": "11111111-1111-4111-8111-111111111112",
+    "publishedAt": "2026-09-14T14:00:00Z"
+  },
+  "revisions": [
+    {
+      "revisionId": "11111111-1111-4111-8111-111111111112",
+      "revisionNumber": 1,
+      "title": "A simpler way to publish in two languages",
+      "slug": "publish-in-two-languages",
+      "summary": "A short introduction to the content platform.",
+      "body": [
+        {
+          "blockId": "11111111-1111-4111-8111-111111111115",
+          "type": "paragraph",
+          "text": "Structured content keeps language variants connected."
+        }
+      ],
+      "categoryIds": ["cat-product-news"],
+      "tagIds": ["tag-cms", "tag-multilingual"],
+      "assetRefs": [
+        {
+          "assetId": "asset-launch-hero",
+          "role": "hero",
+          "mediaType": "image/jpeg",
+          "altText": "Editors collaborating on an article"
+        }
+      ],
+      "createdAt": "2026-09-14T13:00:00Z",
+      "createdBy": "editor-maya"
+    },
+    {
+      "revisionId": "11111111-1111-4111-8111-111111111113",
+      "revisionNumber": 2,
+      "title": "A simpler way to publish in two languages",
+      "slug": "publish-in-two-languages",
+      "summary": "Updated draft; the published copy remains Revision 1.",
+      "body": [
+        {
+          "blockId": "11111111-1111-4111-8111-111111111116",
+          "type": "paragraph",
+          "text": "Structured content keeps language variants connected and revisions traceable."
+        }
+      ],
+      "categoryIds": ["cat-product-news"],
+      "tagIds": ["tag-cms", "tag-multilingual"],
+      "assetRefs": [
+        {
+          "assetId": "asset-launch-hero",
+          "role": "hero",
+          "mediaType": "image/jpeg",
+          "altText": "Editors collaborating on an article"
+        }
+      ],
+      "createdAt": "2026-09-14T14:10:00Z",
+      "createdBy": "editor-maya"
+    }
+  ]
+}

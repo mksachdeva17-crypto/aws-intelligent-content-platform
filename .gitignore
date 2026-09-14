@@ -1,0 +1,19 @@
+# Local credentials and personal BMAD configuration
+.env
+.env.*
+!.env.example
+_bmad/config.user.toml
+_bmad/custom/*.user.toml
+
+# Build and infrastructure state
+node_modules/
+dist/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+
+# Local tooling caches
+.tools/
+__pycache__/
+*.pyc
