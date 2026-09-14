@@ -70,7 +70,16 @@
     {
       "Sid": "ListLogGroups",
       "Effect": "Allow",
-      "Action": "logs:DescribeLogGroups",
+      "Action": [
+        "logs:CreateLogDelivery",
+        "logs:DeleteLogDelivery",
+        "logs:DescribeLogGroups",
+        "logs:DescribeResourcePolicies",
+        "logs:GetLogDelivery",
+        "logs:ListLogDeliveries",
+        "logs:PutResourcePolicy",
+        "logs:UpdateLogDelivery"
+      ],
       "Resource": "*"
     },
     {
@@ -79,12 +88,20 @@
       "Action": [
         "logs:CreateLogGroup",
         "logs:DeleteLogGroup",
+        "logs:DescribeLogStreams",
+        "logs:FilterLogEvents",
+        "logs:GetLogEvents",
         "logs:ListTagsForResource",
         "logs:PutRetentionPolicy",
         "logs:TagResource",
         "logs:UntagResource"
       ],
-      "Resource": "arn:aws:logs:ca-central-1:052652484989:log-group:/aws/lambda/intelligent-cms-dev-*"
+      "Resource": [
+        "arn:aws:logs:ca-central-1:052652484989:log-group:/aws/lambda/intelligent-cms-dev-*",
+        "arn:aws:logs:ca-central-1:052652484989:log-group:/aws/lambda/intelligent-cms-dev-*:*",
+        "arn:aws:logs:ca-central-1:052652484989:log-group:/aws/apigateway/intelligent-cms-dev-*",
+        "arn:aws:logs:ca-central-1:052652484989:log-group:/aws/apigateway/intelligent-cms-dev-*:*"
+      ]
     },
     {
       "Sid": "ManageDay1HttpApi",

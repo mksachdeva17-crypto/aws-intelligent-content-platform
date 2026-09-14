@@ -1,8 +1,0 @@
-services:
-  localstack:
-    image: localstack/localstack:2026.8.2
-    ports:
-      - "127.0.0.1:4566:4566"
-    environment:
-      LOCALSTACK_AUTH_TOKEN: ${LOCALSTACK_AUTH_TOKEN:?Set a LocalStack token in your shell; never commit it}
-      PERSISTENCE: "0"

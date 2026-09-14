@@ -1,1 +1,0 @@
-"""Generic content management API."""

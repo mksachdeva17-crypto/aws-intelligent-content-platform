@@ -34,9 +34,11 @@ The [original architecture diagram](../../docs/assets/aws-intelligent-content-pl
 | **9 — Resilience and DR** | Enable/test DynamoDB PITR and S3 versioning where affordable; run one recovery drill; write regional recovery runbook with RTO/RPO and active-passive vs active-active decision. **No expensive live multi-region build.** | Multi-AZ vs multi-region, Global Tables, replication, failover, cost vs resilience. Interview: **What survives a Region outage?** | Recovery evidence and a clearly bounded production DR design exist. This day includes hands-on restore work even though multi-region remains design-only. |
 | **10 — Consolidation + interview demo** | Clean Terraform, tests, README, ADRs and one repeatable end-to-end demo: define type → create entry → attach asset → review → publish → EventBridge/SQS → S3/CloudFront → OpenSearch; rerun failure/load checks. No large new feature. | Defend latency, scale, availability, durability, consistency, security, observability, cost and DR choices. | Fresh-clone setup and demo work; for each major AWS component, explain why it exists, how it fails/scales, an alternative and the accepted trade-off. |
 
-## Daily evidence, not just activity
+## Mandatory daily SAA-C03 gate
 
-Every day records: code/IaC changed, tests run, AWS resources touched, result of one smoke/failure test, cost impact, and the answer to that day's interview question. `docs/daily/` can hold these short records. A day is not complete merely because a service was provisioned or a diagram was drawn.
+Every implementation day creates a detailed `docs/daily/day-NN.md` from `docs/daily/TEMPLATE.md`. It records the as-built request/event path, code and IaC changed, AWS resources touched, tests and failure checks, cost impact, operational evidence, and scenario questions with reasoned answers across all four official SAA-C03 domains: secure, resilient, high-performing, and cost-optimized architectures.
+
+Before the day can pass, review every service introduced or changed against those domains. An in-scope weakness must be implemented and reverified that day. A control dependent on a future feature may be deferred only when the record names the target day, explains why the current slice is still safe, and provides an interim control. Provisioning a service or drawing a diagram is never sufficient evidence.
 
 ## MVP scope boundaries
 

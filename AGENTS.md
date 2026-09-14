@@ -18,6 +18,8 @@ This repository builds a generic, AWS-native CMS. Two people may work on it conc
 - Never use the account-root AWS profile for Terraform deployment. Run `scripts/aws_preflight.ps1` against the chosen non-root profile first.
 - Add tests and reproducible commands with each implementation slice. Record actual cloud evidence only after running it.
 - Day 1 Terraform state is local and ignored. Until a remote encrypted backend is configured, only the current state holder may apply or destroy the shared AWS stack.
+- End every implementation day with `docs/daily/day-NN.md`, using `docs/daily/TEMPLATE.md`. Cover all four SAA-C03 domains, include scenario questions with reasoned answers, and record commands/evidence.
+- A day cannot pass with an unresolved gap in the services or architecture implemented that day. Fix and reverify it the same day. A dependency intentionally scheduled for a later day is allowed only when the daily record names that day, explains the boundary, and shows the current slice remains safe.
 
 ## Working together
 

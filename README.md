@@ -14,10 +14,11 @@ This repository is building **MVP 1: a generic, schema-driven, multi-industry co
 
 ## Day 1 local checks
 
-The Lambda code targets the [AWS Python 3.12 runtime](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html). The dependency-free unit tests also run on local Python 3.11:
+The Lambda targets the supported AWS `nodejs22.x` runtime on ARM64. Install Node.js 22 or 24, then run the built-in Node test suite:
 
 ```powershell
-py -m unittest discover -s tests -v
+npm ci
+npm test
 ```
 
 ## Day 1 AWS deployment
@@ -35,30 +36,18 @@ terraform -chdir=infra/day1 validate
 ./scripts/terraform_day1.ps1 output -Profile cms-deploy -Region ca-central-1 -CaBundle <trusted-ca.pem>
 ```
 
-For an end-to-end signed smoke test, install the pinned local test dependency, then run:
+For an end-to-end IAM-signed smoke test, run:
 
 ```powershell
-py -m pip install -r requirements-dev.txt
-py scripts/smoke_day1.py --url <management_api_url> --region <region> --profile <profile>
+npm run smoke:aws -- --url <management_api_url> --region <region> --profile <profile>
 ```
 
 The smoke script creates and reads a demo `product` and `article` through the same generic path, updates the product, and checks that a stale update returns HTTP 409. It incurs small AWS request/storage charges. `GET` and `PUT` require `tenantId` and `siteId` query parameters; `POST` takes them from JSON. All content remains draft on Day 1. When finished, use `./scripts/terraform_day1.ps1 destroy` with the same profile/Region/CA settings and review the destruction plan before approval.
 
 The verified management endpoint is `https://fokte33w34.execute-api.ca-central-1.amazonaws.com/`. It requires IAM-signed requests. Terraform state is currently local and ignored; until a shared encrypted backend is added, only the current state holder should apply or destroy this stack. Never exchange the state file through Git or chat.
 
-## Deferred LocalStack Hobby checks
+LocalStack was explicitly skipped for Day 1 and its unused configuration was removed. The complete route is verified in AWS.
 
-LocalStack was explicitly skipped for Day 1. The [LocalStack Hobby plan](https://docs.localstack.cloud/aws/licensing/) includes DynamoDB and Lambda, but **not API Gateway HTTP APIs**. The checked-in [Compose file](compose.localstack.yml) remains an optional future DynamoDB-adapter check; the complete route was tested in AWS. LocalStack requires an [auth token](https://docs.localstack.cloud/aws/getting-started/auth-token/); keep it in your shell environment, never in Git or chat. Docker Desktop's Linux engine must be running.
-
-```powershell
-# Copy .env.example to ignored .env, then put your own LocalStack token in .env.
-docker compose -f compose.localstack.yml up -d
-aws dynamodb list-tables --profile cms-local
-py -m pip install -r requirements-dev.txt
-py scripts/localstack_day1.py
-docker compose -f compose.localstack.yml down
-```
-
-The `cms-local` AWS CLI profile on the current workstation also uses dummy credentials, `ca-central-1`, and the loopback endpoint. The test creates only a local DynamoDB table. Do not export `AWS_ENDPOINT_URL` globally for real AWS deployment.
+Every completed implementation day must include a detailed record under `docs/daily/`, based on [the daily template](docs/daily/TEMPLATE.md). The record includes SAA-C03 scenario questions across security, resilience, performance, and cost. An in-scope gap blocks completion until it is fixed and reverified; future-feature dependencies must name the planned day rather than being silently ignored.
 
 BMAD v6.12.0 is installed under `_bmad/` with Codex skill entry points in `.agents/skills/`. Its `bmad-build` runner requires `uv`; that prerequisite is not yet installed because package retrieval failed local TLS certificate validation. Do not disable certificate checks to bypass it.

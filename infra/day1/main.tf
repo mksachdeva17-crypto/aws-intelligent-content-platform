@@ -24,7 +24,7 @@ locals {
 
 data "archive_file" "content_api" {
   type        = "zip"
-  source_dir  = "${path.module}/../../src"
+  source_dir  = "${path.module}/../../src/content-api"
   output_path = "${path.module}/content-api.zip"
 }
 
@@ -42,6 +42,10 @@ resource "aws_dynamodb_table" "content" {
   attribute {
     name = "sk"
     type = "S"
+  }
+
+  server_side_encryption {
+    enabled = true
   }
 
   tags = var.tags
@@ -62,6 +66,12 @@ resource "aws_iam_role" "content_api" {
 
 resource "aws_cloudwatch_log_group" "content_api" {
   name              = "/aws/lambda/${local.name}-content-api"
+  retention_in_days = 7
+  tags              = var.tags
+}
+
+resource "aws_cloudwatch_log_group" "management_api" {
+  name              = "/aws/apigateway/${local.name}-management"
   retention_in_days = 7
   tags              = var.tags
 }
@@ -101,8 +111,9 @@ resource "aws_lambda_function" "content_api" {
   filename         = data.archive_file.content_api.output_path
   source_code_hash = data.archive_file.content_api.output_base64sha256
   role             = aws_iam_role.content_api.arn
-  handler          = "content_api.handler.lambda_handler"
-  runtime          = "python3.12"
+  handler          = "handler.handler"
+  runtime          = "nodejs22.x"
+  architectures    = ["arm64"]
   memory_size      = 256
   timeout          = 10
 
@@ -153,6 +164,24 @@ resource "aws_apigatewayv2_stage" "default" {
   api_id      = aws_apigatewayv2_api.management.id
   name        = "$default"
   auto_deploy = true
+
+  default_route_settings {
+    throttling_burst_limit = 5
+    throttling_rate_limit  = 10
+  }
+
+  access_log_settings {
+    destination_arn = aws_cloudwatch_log_group.management_api.arn
+    format = jsonencode({
+      requestId        = "$context.requestId"
+      requestTime      = "$context.requestTime"
+      httpMethod       = "$context.httpMethod"
+      routeKey         = "$context.routeKey"
+      status           = "$context.status"
+      responseLength   = "$context.responseLength"
+      integrationError = "$context.integrationErrorMessage"
+    })
+  }
 }
 
 resource "aws_lambda_permission" "api_gateway" {
